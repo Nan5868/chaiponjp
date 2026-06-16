@@ -226,7 +226,10 @@ function loadConfig() {
 
 async function sendMail(config, to, subject, text) {
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    family: 4, // RenderのIPv6接続不可によるENETUNREACHを回避
     auth: { user: config.gmailUser, pass: config.gmailAppPassword }
   });
   await transporter.sendMail({ from: config.gmailUser, to, subject, text });
