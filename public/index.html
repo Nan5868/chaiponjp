@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ご招待のご案内</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Hiragino Mincho ProN', 'Georgia', serif;
+    background: linear-gradient(135deg, #1a0e08 0%, #3d2314 50%, #1a0e08 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .card {
+    background: #fefcf8;
+    border-radius: 20px;
+    max-width: 560px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .header {
+    background: linear-gradient(135deg, #4a2c12, #7a4a20);
+    color: #f5e6c8;
+    padding: 36px 32px;
+    text-align: center;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c9a96e, transparent);
+  }
+  .restaurant-icon { font-size: 48px; margin-bottom: 12px; }
+  .header h1 { font-size: 22px; font-weight: normal; letter-spacing: 4px; margin-bottom: 8px; }
+  .header p { font-size: 13px; opacity: 0.8; letter-spacing: 1px; line-height: 1.8; }
+  .divider { text-align: center; color: #c9a96e; font-size: 18px; margin: 4px 0; letter-spacing: 8px; }
+  .form-body { padding: 32px; }
+  .personal-message {
+    background: #fff8f0;
+    border: 1.5px solid #e8d5b7;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #4a3728;
+    line-height: 2;
+    font-family: 'Hiragino Sans', sans-serif;
+    text-align: left;
+  }
+  .intro {
+    background: #fdf5e8;
+    border-left: 3px solid #c9a96e;
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin-bottom: 28px;
+    font-size: 14px;
+    color: #5a3e2a;
+    line-height: 1.9;
+  }
+  .section { margin-bottom: 24px; }
+  .section label {
+    display: block;
+    font-size: 13px;
+    color: #7a5535;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    font-family: 'Hiragino Sans', sans-serif;
+  }
+  .required { color: #c0392b; margin-left: 4px; }
+  .section input[type="text"],
+  .section input[type="email"],
+  .section input[type="date"],
+  .section textarea,
+  .section select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e0d4c0;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+    background: #fffef9;
+    color: #3a2a1a;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .section input:focus,
+  .section textarea:focus,
+  .section select:focus {
+    outline: none;
+    border-color: #c9a96e;
+    box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+  }
+  .section textarea { min-height: 80px; resize: vertical; line-height: 1.6; }
+  .date-group { display: flex; flex-direction: column; gap: 14px; }
+  .date-row { display: flex; flex-direction: column; gap: 6px; }
+  .date-row-top { display: flex; align-items: center; gap: 10px; }
+  .date-label {
+    font-size: 12px;
+    color: #999;
+    white-space: nowrap;
+    min-width: 54px;
+    font-family: 'Hiragino Sans', sans-serif;
+  }
+  .time-row {
+    display: flex;
+    gap: 8px;
+    margin-left: 64px;
+  }
+  .time-btn {
+    flex: 1;
+    padding: 8px;
+    border: 1.5px solid #e0d4c0;
+    border-radius: 8px;
+    background: #fffef9;
+    color: #7a5535;
+    font-size: 13px;
+    font-family: 'Hiragino Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .time-btn:hover { border-color: #c9a96e; background: #fdf8ef; }
+  .time-btn.selected { border-color: #c9a96e; background: #fdf0d8; color: #4a2c12; font-weight: bold; }
+  .time-slots {
+    display: none;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-left: 64px;
+    margin-top: 6px;
+  }
+  .time-slot-btn {
+    padding: 6px 12px;
+    border: 1.5px solid #e0d4c0;
+    border-radius: 20px;
+    background: #fffef9;
+    color: #7a5535;
+    font-size: 13px;
+    font-family: 'Hiragino Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .time-slot-btn:hover { border-color: #c9a96e; background: #fdf8ef; }
+  .time-slot-btn.selected { border-color: #c9a96e; background: #fdf0d8; color: #4a2c12; font-weight: bold; }
+  .closed-notice {
+    display: none;
+    background: #fff5f0;
+    border: 1.5px solid #f0c8b0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #8a4a30;
+    font-family: 'Hiragino Sans', sans-serif;
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .date-warning {
+    font-size: 11px;
+    color: #c0392b;
+    font-family: 'Hiragino Sans', sans-serif;
+    margin-left: 64px;
+    margin-top: 2px;
+    display: none;
+  }
+  .radio-group { display: flex; flex-direction: column; gap: 10px; }
+  .radio-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border: 1.5px solid #e0d4c0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fffef9;
+  }
+  .radio-item:hover { border-color: #c9a96e; background: #fdf8ef; }
+  .radio-item input { accent-color: #c9a96e; width: 18px; height: 18px; }
+  .radio-item .label-text { font-size: 14px; color: #4a3728; font-family: 'Hiragino Sans', sans-serif; }
+  .radio-item .label-sub { font-size: 12px; color: #999; margin-top: 2px; }
+  .radio-item .label-sub a { color: #c9a96e; text-decoration: none; }
+  .radio-item .label-sub a:hover { text-decoration: underline; }
+  .count-row select { width: 100%; }
+  .submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #4a2c12, #7a4a20);
+    color: #f5e6c8;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    font-family: 'Hiragino Mincho ProN', serif;
+    margin-top: 8px;
+  }
+  .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+  .submit-btn:active { transform: translateY(0); }
+  .footer-note {
+    text-align: center;
+    font-size: 12px;
+    color: #bbb;
+    margin-top: 20px;
+    font-family: 'Hiragino Sans', sans-serif;
+    line-height: 1.8;
+  }
+  .separator { border: none; border-top: 1px dashed #e0d4c0; margin: 24px 0; }
+  .date-section { display: none; }
+  .date-section.visible { display: block; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <div class="restaurant-icon">🍽️</div>
+    <div class="divider">✦ ✦ ✦</div>
+    <h1>ご招待のご案内</h1>
+    <div class="divider">✦ ✦ ✦</div>
+    <p style="margin-top:12px">日頃のご厚情への感謝を込めて<br>お食事にご招待させていただきたく存じます</p>
+  </div>
+
+  <div class="form-body">
+    <div class="personal-message">
+      さとさん！今シーズンも本当にお疲れ様でした。<br>
+      私はさとさんなしではここまで頑張れなかったです。<br>
+      感謝しかありません。<br>
+      ぜひ一ヶ月の日本を楽しんでください！<br>
+      そしてまたGlasgowでパンケーキ食べましょ♡
+    </div>
+
+    <div class="intro">
+      ご都合のよい日程や人数など、以下のフォームよりお知らせください。<br>
+      内容を確認後、改めてご連絡いたします。
+    </div>
+
+    <form action="/submit" method="POST" onsubmit="return validateForm()">
+
+      <div class="section">
+        <label>メールアドレス<span class="required">*</span><br>
+          <span style="font-size:11px;font-weight:normal;color:#aaa">（確定後にご連絡をお送りします）</span>
+        </label>
+        <input type="email" name="email" placeholder="example@mail.com" required>
+      </div>
+
+      <hr class="separator">
+
+      <!-- 1. まずコースを選ぶ -->
+      <div class="section">
+        <label>お料理のご希望<span class="required">*</span></label>
+        <div class="radio-group">
+          <label class="radio-item">
+            <input type="radio" name="cuisine" value="和食" required onchange="onCuisineChange()">
+            <div>
+              <div class="label-text">🍱 和食コース</div>
+              <div class="label-sub"><a href="https://hikage.chaya.co.jp" target="_blank" rel="noopener" onclick="event.stopPropagation()">日影茶屋 ↗</a></div>
+            </div>
+          </label>
+          <label class="radio-item">
+            <input type="radio" name="cuisine" value="フランス料理" onchange="onCuisineChange()">
+            <div>
+              <div class="label-text">🥂 フランス料理コース</div>
+              <div class="label-sub"><a href="https://lamaree.chaya.co.jp" target="_blank" rel="noopener" onclick="event.stopPropagation()">ラ・マーレ・ド・茶屋 ↗</a></div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <hr class="separator">
+
+      <!-- 2. コース選択後に日程・時間が表示される -->
+      <div class="date-section" id="dateSection">
+        <div class="section">
+          <label>ご希望日程と時間帯<span class="required">*</span><br>
+            <span style="font-size:11px;font-weight:normal;color:#aaa">（第2・第3希望は任意ですが、入れていただけると調整しやすくなります）</span>
+          </label>
+
+          <div id="closedNotice" class="closed-notice"></div>
+
+          <div class="date-group">
+            <!-- 第1希望 -->
+            <div class="date-row">
+              <div class="date-row-top">
+                <span class="date-label">第1希望</span>
+                <input type="date" name="date1" id="date1" min="2026-06-01" max="2026-07-07" required onchange="checkDate(this, 'warn1')">
+              </div>
+              <div class="time-row" id="time1row" style="display:none">
+                <input type="hidden" name="time1" id="time1val">
+                <button type="button" class="time-btn" onclick="selectPeriod(1,'lunch',this)">🌞 ランチ<br><small>12:00〜15:00</small></button>
+                <button type="button" class="time-btn" onclick="selectPeriod(1,'dinner',this)">🌙 ディナー<br><small>17:30〜19:00</small></button>
+              </div>
+              <div class="time-slots" id="time1slots"></div>
+              <div class="date-warning" id="warn1"></div>
+            </div>
+
+            <!-- 第2希望 -->
+            <div class="date-row">
+              <div class="date-row-top">
+                <span class="date-label">第2希望</span>
+                <input type="date" name="date2" id="date2" min="2026-06-01" max="2026-07-07" onchange="checkDate(this, 'warn2')">
+              </div>
+              <div class="time-row" id="time2row" style="display:none">
+                <input type="hidden" name="time2" id="time2val">
+                <button type="button" class="time-btn" onclick="selectPeriod(2,'lunch',this)">🌞 ランチ<br><small>12:00〜15:00</small></button>
+                <button type="button" class="time-btn" onclick="selectPeriod(2,'dinner',this)">🌙 ディナー<br><small>17:30〜19:00</small></button>
+              </div>
+              <div class="time-slots" id="time2slots"></div>
+              <div class="date-warning" id="warn2"></div>
+            </div>
+
+            <!-- 第3希望 -->
+            <div class="date-row">
+              <div class="date-row-top">
+                <span class="date-label">第3希望</span>
+                <input type="date" name="date3" id="date3" min="2026-06-01" max="2026-07-07" onchange="checkDate(this, 'warn3')">
+              </div>
+              <div class="time-row" id="time3row" style="display:none">
+                <input type="hidden" name="time3" id="time3val">
+                <button type="button" class="time-btn" onclick="selectPeriod(3,'lunch',this)">🌞 ランチ<br><small>12:00〜15:00</small></button>
+                <button type="button" class="time-btn" onclick="selectPeriod(3,'dinner',this)">🌙 ディナー<br><small>17:30〜19:00</small></button>
+              </div>
+              <div class="time-slots" id="time3slots"></div>
+              <div class="date-warning" id="warn3"></div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="separator">
+
+        <div class="section">
+          <label>どなたとお越しになりますか？<span class="required">*</span></label>
+          <div class="radio-group">
+            <label class="radio-item">
+              <input type="radio" name="groupType" value="ご家族" required>
+              <div><div class="label-text">👨‍👩‍👧 ご家族と</div></div>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="groupType" value="お友達">
+              <div><div class="label-text">👫 お友達と</div></div>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="groupType" value="お一人">
+              <div><div class="label-text">🙋 お一人で</div></div>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="groupType" value="その他">
+              <div><div class="label-text">👥 その他</div></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="section">
+          <label>合計人数<span class="required">*</span></label>
+          <select name="count" required>
+            <option value="">選択してください</option>
+            <option value="1">1名</option>
+            <option value="2">2名</option>
+            <option value="3">3名</option>
+            <option value="4">4名</option>
+            <option value="5">5名</option>
+            <option value="6">6名</option>
+            <option value="7以上">7名以上</option>
+          </select>
+        </div>
+
+        <hr class="separator">
+
+        <div class="section">
+          <label>食物アレルギー・食べられないものはありますか？</label>
+          <input type="text" name="allergy" placeholder="例: えび・かに / 乳製品 / 特になし">
+        </div>
+
+        <div class="section">
+          <label>その他、ご要望やメッセージ（任意）<br>
+            <span style="font-size:11px;font-weight:normal;color:#aaa">記念日のお祝いなども、遠慮なくお知らせください🎂</span>
+          </label>
+          <textarea name="message" placeholder="例：誕生日のお祝いをしたい / アレルギーの詳細 / その他なんでも"></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">送　信</button>
+
+        <p class="footer-note">
+          ご入力内容を確認後、メールにてご連絡いたします。<br>
+          お返事まで数日お時間をいただく場合がございます。
+        </p>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+// 日本の祝日 2026年（主要なもの）
+const HOLIDAYS_2026 = new Set([
+  '2026-01-01','2026-01-12','2026-02-11','2026-02-23',
+  '2026-03-20','2026-04-29','2026-05-03','2026-05-04',
+  '2026-05-05','2026-05-06','2026-07-20','2026-08-11',
+  '2026-09-21','2026-09-22','2026-09-23','2026-10-12',
+  '2026-11-03','2026-11-23','2026-12-23'
+]);
+
+function getCuisine() {
+  const el = document.querySelector('input[name="cuisine"]:checked');
+  return el ? el.value : null;
+}
+
+function isClosedDay(dateStr, cuisine) {
+  if (!dateStr) return false;
+  const d = new Date(dateStr + 'T00:00:00');
+  const dow = d.getDay(); // 0=日,1=月,2=火,3=水,4=木,5=金,6=土
+
+  if (cuisine === 'フランス料理') {
+    if (dow === 1) return true; // 毎週月曜
+    if (dow === 2) {
+      const weekNum = Math.ceil(d.getDate() / 7);
+      if (weekNum === 2) return true; // 第2火曜
+    }
+    return false;
+  } else if (cuisine === '和食') {
+    return dow === 2 || dow === 3; // 火・水休み
+  }
+  return false;
+}
+
+function getClosedLabel(cuisine) {
+  if (cuisine === 'フランス料理') return '定休日：毎週月曜日・第2火曜日';
+  if (cuisine === '和食') return '定休日：毎週火曜・水曜';
+  return '';
+}
+
+function onCuisineChange() {
+  const cuisine = getCuisine();
+  document.getElementById('dateSection').classList.add('visible');
+  document.getElementById('closedNotice').style.display = 'block';
+  document.getElementById('closedNotice').textContent = '📅 ' + getClosedLabel(cuisine);
+  // 日程の警告を再チェック
+  ['date1','date2','date3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    if (el.value) checkDate(el, 'warn' + (i+1));
+  });
+}
+
+function checkDate(input, warnId) {
+  const cuisine = getCuisine();
+  const warn = document.getElementById(warnId);
+  const timeRowId = input.id.replace('date','time') + 'row';
+  const timeRow = document.getElementById(timeRowId);
+
+  if (input.value && isClosedDay(input.value, cuisine)) {
+    warn.textContent = '⚠️ この日は定休日の可能性があります。別の日もご検討ください。';
+    warn.style.display = 'block';
+  } else {
+    warn.style.display = 'none';
+  }
+
+  // 日付が入力されたら時間帯ボタンを表示
+  if (input.value) {
+    timeRow.style.display = 'flex';
+  } else {
+    timeRow.style.display = 'none';
+  }
+}
+
+const LUNCH_SLOTS = ['12:00','12:30','13:00','13:30','14:00','14:30'];
+const DINNER_SLOTS = ['17:30','18:00','18:30','19:00'];
+
+function selectPeriod(num, period, btn) {
+  const row = document.getElementById('time' + num + 'row');
+  row.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+
+  const slots = period === 'lunch' ? LUNCH_SLOTS : DINNER_SLOTS;
+  const slotsDiv = document.getElementById('time' + num + 'slots');
+  document.getElementById('time' + num + 'val').value = '';
+
+  slotsDiv.innerHTML = slots.map(t =>
+    `<button type="button" class="time-slot-btn" onclick="selectSlot(${num},'${t}',this)">${t}</button>`
+  ).join('');
+  slotsDiv.style.display = 'flex';
+}
+
+function selectSlot(num, time, btn) {
+  const slotsDiv = document.getElementById('time' + num + 'slots');
+  slotsDiv.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  document.getElementById('time' + num + 'val').value = time;
+}
+
+function validateForm() {
+  const time1 = document.getElementById('time1val').value;
+  if (!time1) {
+    alert('第1希望の時間帯（ランチ / ディナー）を選択してください。');
+    return false;
+  }
+  return true;
+}
+</script>
+</body>
+</html>
