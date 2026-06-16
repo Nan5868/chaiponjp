@@ -43,6 +43,9 @@ app.post('/submit', async (req, res) => {
   responses.push(entry);
   saveResponses(responses);
 
+  // 先にゲストへレスポンスを返す（メール送信を待たない）
+  res.redirect('/thanks.html');
+
   const config = loadConfig();
   const notifyTargets = [config.notifyEmail, config.fatherEmail].filter(Boolean);
   if (notifyTargets.length > 0) {
@@ -59,15 +62,13 @@ app.post('/submit', async (req, res) => {
       `━━━━━━━━━━━━━━━\n\n` +
       `管理画面で予約を確定してください👇\n` +
       `${config.adminUrl || '/admin'}`;
-    await Promise.all(
+    Promise.all(
       notifyTargets.map(email =>
         sendMail(config, email, '【新着】さとさんからフォームが届きました！', notifyBody)
           .catch(err => console.error(`通知メール送信エラー(${email}):`, err))
       )
     );
   }
-
-  res.redirect('/thanks.html');
 });
 
 // 管理画面: 回答一覧
