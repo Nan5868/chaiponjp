@@ -1,5 +1,5 @@
 const express = require('express');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const fs = require('fs');
 const path = require('path');
 
@@ -225,14 +225,14 @@ function loadConfig() {
 }
 
 async function sendMail(config, to, subject, text) {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    family: 4, // RenderのIPv6接続不可によるENETUNREACHを回避
-    auth: { user: config.gmailUser, pass: config.gmailAppPassword }
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  const { error } = await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to,
+    subject,
+    text,
   });
-  await transporter.sendMail({ from: config.gmailUser, to, subject, text });
+  if (error) throw new Error(JSON.stringify(error));
 }
 
 const PORT = process.env.PORT || 3000;
