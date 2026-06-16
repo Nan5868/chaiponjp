@@ -47,7 +47,7 @@ app.post('/submit', async (req, res) => {
   res.redirect('/thanks.html');
 
   const config = loadConfig();
-  const notifyTargets = [config.notifyEmail, config.fatherEmail].filter(Boolean);
+  const notifyTargets = [config.notifyEmail].filter(Boolean);
   if (notifyTargets.length > 0) {
     const notifyBody =
       `さとさんがフォームを送信しました！\n\n` +
