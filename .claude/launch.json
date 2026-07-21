@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "chaiponjp",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["-y", "serve", "public", "-l", "3000"],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}
