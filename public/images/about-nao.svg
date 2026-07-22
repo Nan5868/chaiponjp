@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
-  <rect width="400" height="400" fill="#eef2ea"/>
-  <circle cx="200" cy="160" r="70" fill="#c9d9c2"/>
-  <circle cx="200" cy="150" r="45" fill="#f7f5ef"/>
-  <path d="M120 320 C120 250 160 220 200 220 C240 220 280 250 280 320 Z" fill="#c9d9c2"/>
-  <text x="200" y="370" font-family="Georgia, serif" font-size="18" fill="#4a7c59" text-anchor="middle">Nao</text>
-</svg>
