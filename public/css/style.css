@@ -117,7 +117,7 @@ body.is-uz p.lang-uz { display: block; }
 
 .hero-logo {
   width: auto;
-  height: 130px;
+  height: 200px;
   margin-bottom: 24px;
 }
 
@@ -376,6 +376,6 @@ body.is-uz p.lang-uz { display: block; }
 @media (max-width: 780px) {
   .header-inner { flex-wrap: wrap; row-gap: 10px; }
   .site-nav { order: 3; width: 100%; justify-content: center; gap: 16px; flex-wrap: wrap; }
-  .hero-logo { height: 90px; }
+  .hero-logo { height: 140px; }
   .hero-tagline { font-size: 17px; }
 }
