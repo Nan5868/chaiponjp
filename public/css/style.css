@@ -278,6 +278,10 @@ body.is-uz p.lang-uz { display: block; }
   color: var(--gold);
 }
 
+.price-plain {
+  color: var(--text);
+}
+
 .product-sizes {
   display: flex;
   flex-direction: column;
