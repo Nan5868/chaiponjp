@@ -278,6 +278,38 @@ body.is-uz p.lang-uz { display: block; }
   color: var(--gold);
 }
 
+.product-sizes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(47, 82, 51, 0.1);
+}
+
+.size-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.size-row .product-weight { flex: 1; }
+.size-row .product-price { font-size: 17px; }
+
+.size-tag {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--matcha-pale);
+  color: var(--matcha-dark);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .price-old {
   font-size: 14px;
   font-weight: 400;
