@@ -3,13 +3,17 @@
   --matcha: #4a7c59;
   --matcha-light: #8fbc8f;
   --matcha-pale: #e8f0e3;
-  --cream: #f7f5ef;
+  --cream: #F2E8D8;
   --gold: #c9a227;
   --text: #2b2b2b;
   --text-muted: #6b6b6b;
   --radius: 14px;
   --max-width: 1120px;
   --shadow: 0 4px 20px rgba(47, 82, 51, 0.1);
+
+  --sencha: #99B74B;
+  --hojicha-color: #A97845;
+  --genmaicha-color: #B49A62;
 }
 
 * { box-sizing: border-box; }
@@ -294,11 +298,13 @@ body.is-uz p.lang-uz { display: block; }
 .size-row {
   display: flex;
   align-items: baseline;
-  gap: 10px;
+  flex-wrap: wrap;
+  row-gap: 2px;
+  column-gap: 10px;
 }
 
-.size-row .product-weight { flex: 1; }
-.size-row .product-price { font-size: 17px; }
+.size-row .product-weight { flex: 1 1 90px; white-space: nowrap; }
+.size-row .product-price { font-size: 17px; white-space: nowrap; flex-shrink: 0; margin-left: auto; }
 
 .size-tag {
   flex-shrink: 0;
@@ -313,6 +319,10 @@ body.is-uz p.lang-uz { display: block; }
   align-items: center;
   justify-content: center;
 }
+
+.size-tag.tag-sencha { background: var(--sencha); color: #fff; }
+.size-tag.tag-hojicha { background: var(--hojicha-color); color: #fff; }
+.size-tag.tag-genmaicha { background: var(--genmaicha-color); color: #fff; }
 
 .price-old {
   font-size: 14px;
