@@ -346,10 +346,7 @@ body.is-uz p.lang-uz { display: block; }
 }
 
 .gift-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  max-width: 900px;
+  max-width: 520px;
   margin: 0 auto;
 }
 
