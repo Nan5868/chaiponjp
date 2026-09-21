@@ -335,27 +335,30 @@ body.is-uz p.lang-uz { display: block; }
 .product-body .btn { margin-top: 6px; text-align: center; }
 
 /* Gift */
-.gift { padding: 80px 0 60px; }
+.gift { padding: 80px 0; }
 
-.gift-note {
-  max-width: 680px;
-  margin: 0 auto 40px;
-  text-align: center;
-  font-size: 16px;
-  color: var(--text);
-}
-
-.gift-grid {
-  max-width: 520px;
-  margin: 0 auto;
+.gift-inner {
+  display: flex;
+  align-items: center;
+  gap: 48px;
 }
 
 .gift-img {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  width: 42%;
+  max-width: 380px;
+  height: auto;
+  flex-shrink: 0;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+}
+
+.gift-text { flex: 1; min-width: 260px; }
+.gift-text .section-title { text-align: left; }
+
+.gift-note {
+  font-size: 16px;
+  color: var(--text);
+  margin: 0;
 }
 
 /* Tea info */
@@ -473,4 +476,7 @@ body.is-uz p.lang-uz { display: block; }
   .site-nav { order: 3; width: 100%; justify-content: center; gap: 16px; flex-wrap: wrap; }
   .hero-logo { height: 140px; }
   .hero-tagline { font-size: 17px; }
+  .gift-inner { flex-direction: column; text-align: center; }
+  .gift-img { width: 100%; max-width: 380px; }
+  .gift-text .section-title { text-align: center; }
 }
