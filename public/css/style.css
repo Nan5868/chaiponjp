@@ -4,6 +4,7 @@
   --matcha-light: #8fbc8f;
   --matcha-pale: #e8f0e3;
   --cream: #F2E8D8;
+  --card-bg: #FAF5EA;
   --gold: #c9a227;
   --text: #2b2b2b;
   --text-muted: #6b6b6b;
@@ -208,7 +209,7 @@ body.is-uz p.lang-uz { display: block; }
 }
 
 .product-card {
-  background: #fff;
+  background: var(--card-bg);
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
@@ -334,7 +335,7 @@ body.is-uz p.lang-uz { display: block; }
 .product-body .btn { margin-top: 6px; text-align: center; }
 
 /* Tea info */
-.tea-info { padding: 80px 0; background: #fff; }
+.tea-info { padding: 80px 0; background: var(--card-bg); }
 
 .tea-info-inner {
   max-width: 680px;
@@ -402,7 +403,7 @@ body.is-uz p.lang-uz { display: block; }
 }
 
 .contact-card {
-  background: #fff;
+  background: var(--card-bg);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 28px;
